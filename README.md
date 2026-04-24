@@ -1,102 +1,113 @@
-🚀 End-to-End Automated DevOps CI/CD Pipeline
-This project demonstrates a production-ready CI/CD pipeline. It automates the entire lifecycle of a web application—from code commit and Jenkins orchestration to Docker containerization and Kubernetes deployment.
+End-to-End Automated DevOps CI/CD Pipeline
+This project demonstrates a production-grade CI/CD pipeline, automating the journey from a local Node.js application to a high-availability Kubernetes cluster.
 
-🛠 Tech Stack
+Tech Stack
+Source Control: GitHub
+
 CI/CD: Jenkins (Pipeline-as-Code)
 
 Containerization: Docker
 
-Orchestration: Kubernetes (K8s)
-
 Registry: Docker Hub
 
-Source Control: GitHub
+Orchestration: Kubernetes (kubeadm Cluster)
 
 Environment: Linux (Ubuntu/RHEL)
 
-📈 Step-by-Step Implementation
-1. Project Structure
-The project is organized to support automation. It includes the application code, a Dockerfile for containerization, and Kubernetes manifests for orchestration.
+Step-by-Step Implementation
 
-Key Files: app.js, Dockerfile, Jenkinsfile, k8s/deployment.yaml.
+STEP 1: Project Initialization & Structure
+The project was initialized with a specialized directory structure, including the application logic (app.js), dependency management (package.json), and automation scripts (Dockerfile, Jenkinsfile).
+Proves: Repository initialized with all required configuration files.
 
-  <img width="457" height="212" alt="tree" src="https://github.com/user-attachments/assets/d89e0440-9e80-49fa-a04a-a1a858c9cf2d" />
+<img width="1347" height="576" alt="git Repo" src="https://github.com/user-attachments/assets/e3032655-e040-47cb-86e0-caca198ba459"/>
 
-2. Local Development & Testing
-Before automation, the application was tested locally to ensure functional stability.
 
-Bash
-docker run -d -p 3000:30007 devops-app
-  <img width="1360" height="674" alt="Hello 30007" src="https://github.com/user-attachments/assets/91fa6159-27fb-4b99-8d44-c733dc282606" />
- 
 
-3. Docker Image Build
-The application is packaged into a lightweight Docker image using a custom Dockerfile.
+STEP 2: Application Development & Local Testing
+I developed a Node.js server and verified its functionality locally within a Docker container to ensure the "Hello This Is My CI/CD DevOps Project🚀" response was active.
 
-docker build -t vaibhavsurase/devops-app .
- <img width="526" height="594" alt="Screenshot 2026-04-24 204110" src="https://github.com/user-attachments/assets/e7dcc8c1-74eb-4d60-bb9b-cfba24cdc6c7" />
+docker build -t devops-app .
 
-4. Docker Hub Push
-The built image is pushed to a central registry (Docker Hub) to be accessible by the Kubernetes cluster.
+docker run -d -p 3000:3000 devops-app
+Proves: Application logic is stable and serving traffic on Port 3000.
 
-docker push vaibhavsurase/devops-app:latest
-  <img width="904" height="254" alt="Screenshot 2026-04-24 204515" src="https://github.com/user-attachments/assets/de0ace18-74aa-4e57-bfe3-569e94c1143d" />
+<img width="1360" height="139" alt="docker 3000" src="https://github.com/user-attachments/assets/d92f07ef-ea21-4a62-ac22-0de6eb244e0d"/>
 
-5. Kubernetes Infrastructure Deployment
-Deployment manifests are applied to the cluster to create the necessary pods and services.
+
+STEP 3: Docker Hub Registry Integration
+To enable cluster-wide access, the local image was tagged and pushed to Docker Hub. This acts as our centralized image repository.
+
+docker tag devops-app vaibhavsurase/devops-app
+docker push vaibhavsurase/devops-app
+
+Proves: Container image successfully versioned and hosted on Docker Hub.
+
+<img width="904" height="254" alt="Screenshot 2026-04-24 204515" src="https://github.com/user-attachments/assets/7a54d36b-cd26-4964-944b-419e7e43da60"/>
+
+
+STEP 4: Kubernetes Infrastructure (IaC)
+I authored Kubernetes manifests (deployment.yaml and service.yaml) to define a desired state of 2 replicas and a NodePort service.
 
 kubectl apply -f k8s/
-   <img width="507" height="54" alt="k8s apply" src="https://github.com/user-attachments/assets/bee8de86-7d35-41c3-a23d-5070715f6663" />
 
-6. Pod Management
-Two replicas of the application are maintained for high availability.
+Proves: Infrastructure-as-Code applied successfully to the cluster.
+
+<img width="507" height="54" alt="k8s apply" src="https://github.com/user-attachments/assets/d20ce184-ebd8-4f51-9b18-ce3e7bedfb90"/>
+
+
+ STEP 5: Cluster Verification (Pods & Services)
+After deployment, I verified that the Kubernetes control plane successfully scheduled the pods and mapped the service ports.
 
 kubectl get pods
-   <img width="637" height="85" alt="k8s pods" src="https://github.com/user-attachments/assets/644310e2-7934-4bd4-bedd-9dec42aa82a5" />
-
- 7. Service Exposure (NodePort)
-A Kubernetes Service is configured to expose the application to external traffic using a NodePort.
-
 kubectl get svc
-<img width="748" height="84" alt="k8s svc" src="https://github.com/user-attachments/assets/58b69e99-d870-4e8f-b7db-ced94e54727a" />
 
-8. Live Application (Production)
-The application is successfully running and accessible via the Kubernetes NodePort.
+Proves: 2 Pods are 'Running' and the service is exposed on NodePort 30007.
 
-Access URL: http://<Node-IP>:30007
+<img width="637" height="85" alt="k8s pods" src="https://github.com/user-attachments/assets/b4ce3246-f858-4fed-a90b-d2a7e77c5d4b"/>
+<img width="748" height="84" alt="k8s svc" src="https://github.com/user-attachments/assets/7901e6d5-2e6e-48bd-a4c8-f912ddbe56dd"/>
 
-<img width="1360" height="674" alt="Hello 30007" src="https://github.com/user-attachments/assets/e31d9cee-fdea-49b1-9fe4-d9f369dbf83e" />
 
-9. Jenkins Pipeline Automation
-The entire process—Build, Push, and Deploy—is automated through a Jenkins Pipeline.
+STEP 6: Final Production Validation
+The end goal: accessing the application via the Kubernetes NodePort.
 
-Build Status: Success (Build #7)
+Production URL: http://<NODE-IP>:30007
 
-Duration: 1 min 20 sec
+Proves: End-to-end success—app is live on the K8s cluster.
 
-<img width="1346" height="716" alt="green stages jenkins" src="https://github.com/user-attachments/assets/d49cb8e9-52e6-48c6-8fcf-ad58ea940b26" />
+<img width="1360" height="674" alt="Hello 30007" src="https://github.com/user-attachments/assets/5b6f6f87-d9eb-4d1a-86fc-93e272d8ee7c"/>
 
-10. Version Control (GitHub)
-The project code and all configuration files are maintained in GitHub for collaboration and tracking.
 
-[Add Screenshot: Your GitHub Repository Homepage]
 
-🛠 Manual Execution (For Reviewers)
-Note: This project was designed and built from scratch. To replicate the environment manually, use the following commands:
+STEP 7: Jenkins Pipeline Configuration
+Jenkins was linked to the GitHub SCM to listen for code changes and trigger the automated workflow.
 
-1. Build the Container:
+Proves: Jenkins is correctly tracking the GitHub repository.
 
-Bash
-docker build -t devops-app .
-2. Deploy to Cluster:
+<img width="1346" height="667" alt="SCM" src="https://github.com/user-attachments/assets/85ea3a99-519e-46a6-a7dc-a7b52f2c029d"/>
 
-Bash
-kubectl apply -f k8s/deployment.yaml
-kubectl apply -f k8s/service.yaml
-3. Check Status:
 
-Bash
-kubectl get all
+STEP 8: Pipeline Success & Results
+The final automated run (Build #7) was completed successfully, demonstrating a stable and repeatable delivery process.
+
+Duration: ~1 min 20 sec
+
+Proves: CI/CD Pipeline status is Green (Success ✅).
+
+
+<img width="1346" height="716" alt="green stages jenkins" src="https://github.com/user-attachments/assets/e922758b-3e8a-43f5-aa3f-c7850498aa0d"/>
+
+
+
+🛠 Manual Setup Instructions
+To reproduce this project, follow these commands:
+
+Build Container: docker build -t devops-app .
+
+Deploy to K8s: kubectl apply -f k8s/
+
+Verify: kubectl get all
+
 Developed by: Vaibhav Surase
 
 Role: Application Development & Automation Engineer
