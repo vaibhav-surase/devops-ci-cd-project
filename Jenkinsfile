@@ -6,9 +6,10 @@ pipeline {
     }
 
     stages {
-        stage('Clone Code') {
+
+        stage('Checkout') {
             steps {
-                git 'https://github.com/vaibhav-surase/devops-ci-cd-project.git'
+                echo "Code already checked out by Jenkins"
             }
         }
 
